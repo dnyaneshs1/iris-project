@@ -26,7 +26,7 @@ def predict_point():
             pipe=pickle.load(file1)
 
         x_pre=pipe.transform(x_new)
-        x_pre=pd.DataFrame(x_pre,columns=['sepal_length', 'sepal_width', 'petal_length', 'petal_width'])
+        x_pre=pd.DataFrame(x_pre,columns=x_new.columns)
 
         with open('notebook/le.pkl','rb') as file2:
             le=pickle.load(file2)
@@ -36,13 +36,15 @@ def predict_point():
 
         ypred=model.predict(x_pre)
 
-        label=le.inverse_transform(ypred)[0]
-        prob=model.predict_proba(x_pre)
+        pred_lb=le.inverse_transform(ypred)[0]
+        prob=model.predict_proba(x_pre).max()
 
-        prediction=f'{label} with probability {prob:.4f}'
+        prediction1=f'{pred_lb} with probability: {prob:.4f}'
 
-        return render_template('index.html',prediction=prediction)
+        return render_template('index.html',prediction=prediction1)
     
+       
+
 if __name__=='__main__':
     app.run(host='0.0.0.0',debug=True)
 
