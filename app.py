@@ -13,6 +13,7 @@ def home_page():
 def predict_point():
     if request.method=='GET':
         return render_template('index.html')
+    
     else:
         sepal_length=float(request.form.get('sepal_length'))
         sepal_width=float(request.form.get('sepal_width'))
@@ -25,10 +26,10 @@ def predict_point():
         with open('pipe.pkl','rb') as file1:
             pipe=pickle.load(file1)
 
-        x_pre=pipe.transform(new_df)
+        x_pre=pd.DataFrame(pipe.transform(new_df))
         x_pre.columns=['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
 
-        with open('model1.pkl','rb') as file2:
+        with open('model.pkl','rb') as file2:
             model=pickle.load(file2)
 
         pred=model.predict(x_pre)
