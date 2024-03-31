@@ -22,16 +22,16 @@ def predict_point():
         x_new=pd.DataFrame([sepal_length,sepal_width,petal_length,petal_width]).T
         x_new.columns=['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
 
-        with open('notebook/pipe.pkl','rb') as file1:
+        with open('notebook3/pipe3.pkl','rb') as file1:
             pipe=pickle.load(file1)
 
         x_pre=pipe.transform(x_new)
         x_pre=pd.DataFrame(x_pre,columns=x_new.columns)
 
-        with open('notebook/le.pkl','rb') as file2:
+        with open('notebook3/label.pkl','rb') as file2:
             le=pickle.load(file2)
 
-        with open('notebook/model1.pkl','rb') as file3:
+        with open('notebook3/model3.pkl','rb') as file3:
             model=pickle.load(file3)
 
         ypred=model.predict(x_pre)
